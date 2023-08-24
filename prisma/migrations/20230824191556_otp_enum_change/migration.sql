@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "OTP" ADD COLUMN     "isExpired" BOOLEAN NOT NULL DEFAULT false;
