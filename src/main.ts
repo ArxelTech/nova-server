@@ -3,16 +3,16 @@ import { AppModule } from './app.module';
 import * as compression from 'compression';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
-
+import * as morgan from 'morgan';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(compression());
+  app.use(morgan('combined'));
   app.enableCors();
 
   const configService = app.get(ConfigService);
   const PORT = +configService.get('PORT');
-
 
   const config = new DocumentBuilder()
     .setTitle('Nova API example')

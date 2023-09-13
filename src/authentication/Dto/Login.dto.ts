@@ -3,19 +3,7 @@ import { Exclude, Expose } from 'class-transformer';
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 @Exclude()
-export class UserDto {
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  @Expose()
-  firstName: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  @Expose()
-  lastName: string;
-
+export class LoginDto {
   @IsString()
   @IsEmail()
   @IsNotEmpty()
