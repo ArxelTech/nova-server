@@ -9,12 +9,25 @@ export class MediaController {
   @Get('avatars')
   async getAllAvatars(@Query('cursor') cursor: string) {
     try {
+      if (cursor === null || cursor === undefined) {
+        const data = await Cloudinary.api.resources({
+          type: 'upload',
+          prefix: 'Avatars',
+          all: true,
+          max_results: 20,
+        });
+        return {
+          message: 'Avatar Images',
+          data,
+          totalResults: data.resources.length,
+        };
+      }
       const data = await Cloudinary.api.resources({
         type: 'upload',
         prefix: 'Avatars',
         all: true,
         max_results: 20,
-        next_cursor: cursor ? cursor : null,
+        next_cursor: cursor,
       });
       return {
         message: 'Avatar Images',
