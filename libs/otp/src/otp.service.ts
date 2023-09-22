@@ -16,7 +16,7 @@ export class OtpService {
   }
 
   async generateOtp({
-    isUser,
+    // isUser,
     type,
     userId,
   }: {
@@ -47,7 +47,7 @@ export class OtpService {
         AND: [{ userId }, { code }, { type: 'VERIFICATION' }],
       },
     });
-    if (!otp) {
+    if (otp === null) {
       return false;
     }
     if (otp.isExpired) {

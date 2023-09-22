@@ -9,6 +9,9 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { UserModule } from './user/user.module';
+import { RoomModule } from './room/room.module';
+import { MediaModule } from './media/media.module';
 
 
 
@@ -49,6 +52,9 @@ import { AuthenticationModule } from './authentication/authentication.module';
     }),
     ConfigModule.forRoot(),
     AuthenticationModule,
+    UserModule,
+    RoomModule,
+    MediaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
