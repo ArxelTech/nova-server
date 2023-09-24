@@ -1,24 +1,30 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 @Exclude()
 export class UpdateUserDTO {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @Expose()
   @ApiProperty()
   username: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @Expose()
   @ApiProperty()
   firstName: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @Expose()
   @ApiProperty()
   lastName: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  @ApiProperty()
+  profilePic: string;
 }
