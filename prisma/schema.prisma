@@ -57,7 +57,7 @@ model Room {
   link      String
   title     String
   isPlaying Boolean   @default(false)
-  playback  Float
+  playback  Float @default(0.0)
   creatorId String
   platform  String
   createdAt DateTime  @default(now())
