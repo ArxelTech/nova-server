@@ -11,15 +11,24 @@ datasource db {
 }
 
 model User {
-  id String @id @unique  @default(cuid())
-  firstName String
-  lastName String
-  email String
-  emailVerified Boolean @default(false)
-  password String
-  profilePic String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+  id            String   @id @unique @default(cuid())
+  firstName     String
+  lastName      String
+  email         String
+  username      String?
+  emailVerified Boolean  @default(false)
+  password      String
+  profilePic    String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
+
+  // relationships
+  Rooms         Room[]
+  Message       Message[]
+  RoomRequest   RoomRequest[]
+  FriendRequest FriendRequest[]
+  Friends       Friends[]
+  RoomMember    RoomMember[]
 }
 
 enum OTP_TYPE {
@@ -27,13 +36,110 @@ enum OTP_TYPE {
   PASSWORD_RESET
 }
 
-model OTP {
-  id String @id @unique @default(cuid())
-  userId String
-  code String
-  type OTP_TYPE
-  isExpired Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+enum ROOM_TYPE {
+  PUBLIC
+  PRIVATE
 }
 
+model OTP {
+  id        String   @id @unique @default(cuid())
+  userId    String
+  code      String
+  type      OTP_TYPE
+  isExpired Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Room {
+  id        String    @id @unique @default(uuid())
+  type      ROOM_TYPE
+  link      String
+  title     String
+  isPlaying Boolean   @default(false)
+  playback  Float
+  creatorId String
+  platform  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+
+  // Relationships
+  creator     User          @relation(fields: [creatorId], references: [id])
+  Message     Message[]
+  RoomRequest RoomRequest[]
+  RoomMembers  RoomMember[]
+}
+
+enum MESSAGE_TYPE {
+  WITH_MEDIA
+  NO_MEDIA
+}
+
+model Message {
+  id          String       @id @unique @default(uuid())
+  roomId      String
+  creatorId   String
+  message     String
+  messageType MESSAGE_TYPE
+  media       String[]
+  seenByAll   String[]
+  isEdited    Boolean      @default(false)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now()) @updatedAt
+  editedAt    DateTime
+
+  creator User @relation(fields: [creatorId], references: [id])
+  room    Room @relation(fields: [roomId], references: [id])
+}
+
+model RoomRequest {
+  id        String   @id @unique @default(uuid())
+  roomId    String
+  creatorId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  creator User @relation(fields: [creatorId], references: [id])
+  room    Room @relation(fields: [roomId], references: [id])
+}
+
+enum MemberType {
+  HOST
+  CO_HOST
+  MEMBER
+}
+
+model RoomMember {
+  id         String     @id @unique @default(uuid())
+  roomId     String
+  creatorId  String
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @default(now()) @updatedAt
+  memberType MemberType @default(MEMBER)
+
+  creator User @relation(fields: [creatorId], references: [id])
+  room    Room @relation(fields: [roomId], references: [id])
+}
+
+model FriendRequest {
+  id         String   @id @unique @default(uuid())
+  senderId   String
+  receiverId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+
+  sender User    @relation(fields: [senderId], references: [id])
+  //receiver User @relation(fields: [receiverId], references: [id])
+  roomId String?
+}
+
+model Friends {
+  id       String @id @unique @default(uuid())
+  friendId String
+  userId   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  friend User @relation(fields: [friendId], references: [id])
+}
