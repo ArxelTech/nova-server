@@ -1,25 +1,44 @@
 import { DatabaseService } from '@app/database';
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { CreateRoomDTO } from 'src/room/dto/CreateRoomDTo';
 import { uniq } from 'lodash';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const ytdl = require('ytdl-core');
 
 @Injectable()
 export class RoomCrudService {
   constructor(private databaseService: DatabaseService) {}
 
   public async createRoom(id: string, payload: CreateRoomDTO) {
-    const createRoom = await this.databaseService.room.create({
-      data: {
-        ...payload,
-      },
-    });
-
-    // TODO SEND NOTIFICATIONS TO FRIENDS
-
-    return {
-      message: 'Room created',
-      data: createRoom,
-    };
+    if (payload.platform === 'YOUTUBE') {
+      if (!payload.link.includes('www.youtube.com/watch')) {
+        throw new BadRequestException('Invalid youtube URL');
+      }
+      try {
+        const info = await ytdl.getInfo(payload.link);
+        console.log(info);
+        const createRoom = await this.databaseService.room.create({
+          data: {
+            link: payload.link,
+            title: info.videoDetails.title,
+            creatorId: id,
+            platform: payload.platform,
+            type: payload.type,
+          },
+        });
+        // TODO SEND NOTIFICATIONS TO FRIENDS
+        return {
+          message: 'Room created',
+          data: createRoom,
+        };
+      } catch (error) {
+        throw new InternalServerErrorException(error);
+      }
+    }
   }
 
   public async getRooms(id: string) {
