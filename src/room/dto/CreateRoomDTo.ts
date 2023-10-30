@@ -17,11 +17,11 @@ export class CreateRoomDTO {
   @IsNotEmpty()
   link: string;
 
-  @Expose()
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  title: string;
+  // @Expose()
+  // @ApiProperty()
+  // @IsString()
+  // @IsNotEmpty()
+  // title: string;
 
   @Expose()
   @ApiProperty()
@@ -30,7 +30,7 @@ export class CreateRoomDTO {
   creatorId: string;
 
   @Expose()
-  @ApiProperty({ description: 'This can either be YOUTUBE | NETFLIEX for now' })
+  @ApiProperty({ description: 'This can either be YOUTUBE | NETFLIX for now' })
   @IsString()
   @IsNotEmpty()
   platform: string;
