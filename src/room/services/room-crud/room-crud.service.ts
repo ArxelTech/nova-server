@@ -7,7 +7,6 @@ import {
 import { CreateRoomDTO } from 'src/room/dto/CreateRoomDTo';
 import { uniq } from 'lodash';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const ytdl = require('ytdl-core');
 
 @Injectable()
 export class RoomCrudService {
@@ -19,12 +18,10 @@ export class RoomCrudService {
         throw new BadRequestException('Invalid youtube URL');
       }
       try {
-        const info = await ytdl.getInfo(payload.link);
-        console.log(info);
         const createRoom = await this.databaseService.room.create({
           data: {
             link: payload.link,
-            title: info.videoDetails.title,
+            title: 'youtube video',
             creatorId: id,
             platform: payload.platform,
             type: payload.type,
