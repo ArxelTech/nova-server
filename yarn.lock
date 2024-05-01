@@ -877,12 +877,12 @@
     multer "1.4.4-lts.1"
     tslib "2.6.2"
 
-"@nestjs/platform-socket.io@^10.2.1":
-  version "10.2.5"
-  resolved "https://registry.yarnpkg.com/@nestjs/platform-socket.io/-/platform-socket.io-10.2.5.tgz#21029eac2735d0f2796d854c4adf56183d949e30"
-  integrity sha512-mgAvdha7hFBMRS0YbjHCx5Zm4weMjnQbisVIyGSKHu/QWclFsCR09+bdRbITrVhJLFVv/BiNkX350a2wN4fD6w==
+"@nestjs/platform-socket.io@^10.3.8":
+  version "10.3.8"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-socket.io/-/platform-socket.io-10.3.8.tgz#98e246007be4520543bb838d69122abc2cff0e88"
+  integrity sha512-CpsWw/AaJMDTan0FoYHkKyptsrFz8JSnHBGcajvj9UMeKCJ8Hi80T9ymKnP7OozbArKimh1oBusN+k4sKRxRTg==
   dependencies:
-    socket.io "4.7.2"
+    socket.io "4.7.5"
     tslib "2.6.2"
 
 "@nestjs/schematics@^10.0.0", "@nestjs/schematics@^10.0.1":
@@ -921,10 +921,10 @@
   dependencies:
     md5 "^2.2.1"
 
-"@nestjs/websockets@^10.2.1":
-  version "10.2.5"
-  resolved "https://registry.yarnpkg.com/@nestjs/websockets/-/websockets-10.2.5.tgz#e0e5c72268c669d5cbd73735545955371857657a"
-  integrity sha512-nGkOd/BhanJYz7RIgtWDOVv8e8iD6eeUdE8/IbSacczf2nn7BiViLdSDSM+y6+gH2Ee9URAhk+us38IlXEhQ6Q==
+"@nestjs/websockets@^10.3.8":
+  version "10.3.8"
+  resolved "https://registry.yarnpkg.com/@nestjs/websockets/-/websockets-10.3.8.tgz#6ed36ccf52e8aad6de53d628ef28fd40e1fa968f"
+  integrity sha512-DTSCK+FYtSTljT6XjVUUZhf1cPxKEJf1AG1y2n+ERnd0vzMpnYpMFgGkDlXqa3uC+LAMcOcx1EyTCcHsSHrOVg==
   dependencies:
     iterare "1.2.1"
     object-hash "3.0.0"
@@ -1240,10 +1240,10 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-1.3.2.tgz#93e25bf9ee75fe0fd80b594bc4feb0e862111b5a"
   integrity sha512-YATxVxgRqNH6nHEIsvg6k2Boc1JHI9ZbH5iWFFv/MTkchz3b1ieGDa5T0a9RznNdI0KhVbdbWSN+KWWrQZRxTw==
 
-"@types/multer@^1.4.7":
-  version "1.4.7"
-  resolved "https://registry.yarnpkg.com/@types/multer/-/multer-1.4.7.tgz#89cf03547c28c7bbcc726f029e2a76a7232cc79e"
-  integrity sha512-/SNsDidUFCvqqcWDwxv2feww/yqhNeTRL5CVoL3jU4Goc4kKEL10T7Eye65ZqPNi4HRx8sAEX59pV1aEH7drNA==
+"@types/multer@^1.4.11":
+  version "1.4.11"
+  resolved "https://registry.yarnpkg.com/@types/multer/-/multer-1.4.11.tgz#c70792670513b4af1159a2b60bf48cc932af55c5"
+  integrity sha512-svK240gr6LVWvv3YGyhLlA+6LRRWA4mnGIU7RcNmgjBYFl6665wcXrRfxGp5tEPVHUNm5FMcmq7too9bxCwX/w==
   dependencies:
     "@types/express" "*"
 
@@ -1317,6 +1317,13 @@
     "@types/http-errors" "*"
     "@types/mime" "*"
     "@types/node" "*"
+
+"@types/socket.io@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@types/socket.io/-/socket.io-3.0.2.tgz#606c9639e3f93bb8454cba8f5f0a283d47917759"
+  integrity sha512-pu0sN9m5VjCxBZVK8hW37ZcMe8rjn4HHggBN5CbaRTvFwv5jOmuIRZEuddsBPa9Th0ts0SIo3Niukq+95cMBbQ==
+  dependencies:
+    socket.io "*"
 
 "@types/stack-utils@^2.0.0":
   version "2.0.1"
@@ -6776,10 +6783,10 @@ socket.io-parser@~4.2.4:
     "@socket.io/component-emitter" "~3.1.0"
     debug "~4.3.1"
 
-socket.io@4.7.2:
-  version "4.7.2"
-  resolved "https://registry.yarnpkg.com/socket.io/-/socket.io-4.7.2.tgz#22557d76c3f3ca48f82e73d68b7add36a22df002"
-  integrity sha512-bvKVS29/I5fl2FGLNHuXlQaUH/BlzX1IN6S+NKLNZpBsPZIDH+90eQmCs2Railn4YUiww4SzUedJ6+uzwFnKLw==
+socket.io@*, socket.io@4.7.5:
+  version "4.7.5"
+  resolved "https://registry.yarnpkg.com/socket.io/-/socket.io-4.7.5.tgz#56eb2d976aef9d1445f373a62d781a41c7add8f8"
+  integrity sha512-DmeAkF6cwM9jSfmp6Dr/5/mfMwb5Z5qRrSXLpo3Fq5SqyU8CMF15jIN4ZhfSwu35ksM1qmHZDQ/DK5XTccSTvA==
   dependencies:
     accepts "~1.3.4"
     base64id "~2.0.0"
