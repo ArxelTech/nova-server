@@ -12,6 +12,8 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { UserModule } from './user/user.module';
 import { RoomModule } from './room/room.module';
 import { MediaModule } from './media/media.module';
+import { RoomsGateway } from './gateways/rooms/rooms.gateway';
+import { ChatModule } from './chat/chat.module';
 
 
 
@@ -55,8 +57,9 @@ import { MediaModule } from './media/media.module';
     UserModule,
     RoomModule,
     MediaModule,
+    ChatModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, RoomsGateway],
 })
 export class AppModule {}

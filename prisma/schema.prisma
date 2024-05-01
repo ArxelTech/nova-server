@@ -29,6 +29,7 @@ model User {
   FriendRequest FriendRequest[]
   Friends       Friends[]
   RoomMember    RoomMember[]
+  Reaction      Reaction[]
 }
 
 enum OTP_TYPE {
@@ -57,7 +58,7 @@ model Room {
   link      String
   title     String
   isPlaying Boolean   @default(false)
-  playback  Float @default(0.0)
+  playback  Float     @default(0.0)
   creatorId String
   platform  String
   createdAt DateTime  @default(now())
@@ -67,7 +68,7 @@ model Room {
   creator     User          @relation(fields: [creatorId], references: [id])
   Message     Message[]
   RoomRequest RoomRequest[]
-  RoomMembers  RoomMember[]
+  RoomMembers RoomMember[]
 }
 
 enum MESSAGE_TYPE {
@@ -86,10 +87,11 @@ model Message {
   isEdited    Boolean      @default(false)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @default(now()) @updatedAt
-  editedAt    DateTime
+  editedAt    DateTime?
 
-  creator User @relation(fields: [creatorId], references: [id])
-  room    Room @relation(fields: [roomId], references: [id])
+  creator  User       @relation(fields: [creatorId], references: [id])
+  room     Room       @relation(fields: [roomId], references: [id])
+  Reaction Reaction[]
 }
 
 model RoomRequest {
@@ -129,7 +131,7 @@ model FriendRequest {
   updatedAt  DateTime @default(now()) @updatedAt
 
   sender User    @relation(fields: [senderId], references: [id])
-  //receiver User @relation(fields: [receiverId], references: [id])
+  // receiver User @relation(fields: [receiverId], references: [id])
   roomId String?
 }
 
@@ -142,4 +144,15 @@ model Friends {
   updatedAt DateTime @default(now()) @updatedAt
 
   friend User @relation(fields: [friendId], references: [id])
+}
+
+model Reaction {
+  id        String @id @default(cuid())
+  messageId String
+  reaction  String
+  userId    String
+  createdAt String
+
+  user    User    @relation(fields: [userId], references: [id])
+  message Message @relation(fields: [messageId], references: [id])
 }
