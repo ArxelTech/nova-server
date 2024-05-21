@@ -13,28 +13,23 @@ export class RoomCrudService {
   constructor(private databaseService: DatabaseService) {}
 
   public async createRoom(id: string, payload: CreateRoomDTO) {
-    if (payload.platform === 'YOUTUBE') {
-      if (!payload.link.includes('www.youtube.com/watch')) {
-        throw new BadRequestException('Invalid youtube URL');
-      }
-      try {
-        const createRoom = await this.databaseService.room.create({
-          data: {
-            link: payload.link,
-            title: 'youtube video',
-            creatorId: id,
-            platform: payload.platform,
-            type: payload.type,
-          },
-        });
-        // TODO SEND NOTIFICATIONS TO FRIENDS
-        return {
-          message: 'Room created',
-          data: createRoom,
-        };
-      } catch (error) {
-        throw new InternalServerErrorException(error);
-      }
+    try {
+      const createRoom = await this.databaseService.room.create({
+        data: {
+          link: payload.link,
+          title: 'youtube video',
+          creatorId: id,
+          platform: payload.platform,
+          type: payload.type,
+        },
+      });
+      // TODO SEND NOTIFICATIONS TO FRIENDS
+      return {
+        message: 'Room created',
+        data: createRoom,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error);
     }
   }
 

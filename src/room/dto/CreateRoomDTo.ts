@@ -1,12 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ROOM_TYPE } from '@prisma/client';
+import { PLATFORM, ROOM_TYPE } from '@prisma/client';
 import { Exclude, Expose } from 'class-transformer';
 import { IsNotEmpty, IsString } from 'class-validator';
 
 @Exclude()
 export class CreateRoomDTO {
   @Expose()
-  @ApiProperty()
+  @ApiProperty({ enum: ROOM_TYPE })
   @IsString()
   @IsNotEmpty()
   type: ROOM_TYPE;
@@ -17,11 +17,11 @@ export class CreateRoomDTO {
   @IsNotEmpty()
   link: string;
 
-  // @Expose()
-  // @ApiProperty()
-  // @IsString()
-  // @IsNotEmpty()
-  // title: string;
+  @Expose()
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  title: string;
 
   @Expose()
   @ApiProperty()
@@ -30,8 +30,11 @@ export class CreateRoomDTO {
   creatorId: string;
 
   @Expose()
-  @ApiProperty({ description: 'This can either be YOUTUBE | NETFLIX for now' })
+  @ApiProperty({
+    description: 'This can either be YOUTUBE | NETFLIX for now',
+    enum: PLATFORM,
+  })
   @IsString()
   @IsNotEmpty()
-  platform: string;
+  platform: PLATFORM;
 }

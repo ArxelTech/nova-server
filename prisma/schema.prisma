@@ -42,6 +42,14 @@ enum ROOM_TYPE {
   PRIVATE
 }
 
+enum PLATFORM {
+  YOUTUBE
+  NETFLIX
+  DISNEY_PLUS
+  HULU
+  PRIME_VIDEO
+}
+
 model OTP {
   id        String   @id @unique @default(cuid())
   userId    String
@@ -60,7 +68,7 @@ model Room {
   isPlaying Boolean   @default(false)
   playback  Float     @default(0.0)
   creatorId String
-  platform  String
+  platform  PLATFORM
   createdAt DateTime  @default(now())
   updatedAt DateTime  @default(now()) @updatedAt
 
