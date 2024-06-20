@@ -6,11 +6,15 @@ import {
 } from '@nestjs/common';
 import { CreateRoomDTO } from 'src/room/dto/CreateRoomDTo';
 import { uniq } from 'lodash';
+import { RoomsGateway } from 'src/gateways/rooms/rooms.gateway';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 
 @Injectable()
 export class RoomCrudService {
-  constructor(private databaseService: DatabaseService) {}
+  constructor(
+    private databaseService: DatabaseService,
+    private gateWay: RoomsGateway,
+  ) {}
 
   public async createRoom(id: string, payload: CreateRoomDTO) {
     try {
@@ -102,6 +106,63 @@ export class RoomCrudService {
     return {
       message: 'Room message',
       data,
+    };
+  }
+
+  public async joinRoom(userId: string, roomId: string) {
+    const member = await this.databaseService.roomMember.findFirst({
+      where: {
+        creatorId: userId,
+      },
+    });
+
+    if (member) {
+      throw new BadRequestException('You are already a member of this group');
+    }
+
+    const room = await this.databaseService.room.findUnique({
+      where: {
+        id: member.roomId,
+      },
+    });
+
+    if (room.type === 'PRIVATE') {
+      await this.databaseService.roomRequest.create({
+        data: {
+          creatorId: userId,
+          roomId: room.id,
+        },
+      });
+
+      const roomRequest = await this.databaseService.roomRequest.findMany({
+        where: {
+          roomId: room.id,
+        },
+        include: {
+          creator: true,
+          room: true,
+        },
+      });
+
+      this.gateWay.server.emit(`ROOM-REQUEST-${room.id}`, roomRequest);
+
+      return {
+        message: 'Request sent!',
+      };
+    }
+
+    // create new member
+    await this.databaseService.roomMember.create({
+      data: {
+        creatorId: userId,
+        memberType: 'MEMBER',
+        roomId,
+        isAdmitted: true,
+      },
+    });
+
+    return {
+      message: 'You have joined the room',
     };
   }
 }
