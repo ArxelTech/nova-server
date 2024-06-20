@@ -53,7 +53,7 @@ export class RoomController {
   @ApiParam({ name: 'roomId' })
   @UseGuards(UserAuthGuard)
   @Post('join-room/:roomId')
-  sentRoomRequest(@User() user: PrismaUser) {
-    return this.crudService.getRooms(user.id);
+  sentRoomRequest(@User() user: PrismaUser, @Param('roomId') roomId: string) {
+    return this.crudService.joinRoom(user.id, roomId);
   }
 }

@@ -14,6 +14,7 @@ import { RoomModule } from './room/room.module';
 import { MediaModule } from './media/media.module';
 import { RoomsGateway } from './gateways/rooms/rooms.gateway';
 import { ChatModule } from './chat/chat.module';
+import { FriendsModule } from './friends/friends.module';
 
 
 
@@ -58,6 +59,7 @@ import { ChatModule } from './chat/chat.module';
     RoomModule,
     MediaModule,
     ChatModule,
+    FriendsModule,
   ],
   controllers: [AppController],
   providers: [AppService, RoomsGateway],
