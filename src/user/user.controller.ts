@@ -12,6 +12,11 @@ import { UpdatePasswordDto } from './dto/UpdatePasswordDto';
 export class UserController {
   constructor(private crudService: CrudService) {}
 
+  @Get('all-users')
+  public async getAllUsers() {
+    return this.crudService.getAllUsers();
+  }
+
   @ApiParam({ name: 'id', required: true, type: String })
   @Get(':id')
   public async getUserById(@Param('id') id: string) {

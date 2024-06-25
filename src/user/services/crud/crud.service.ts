@@ -72,4 +72,14 @@ export class CrudService {
       message: 'Password updated',
     };
   }
+
+  // FOR TESTING ONLY
+  async getAllUsers() {
+    const users = await this.datbaseService.user.findMany();
+
+    return {
+      message: 'Users',
+      data: users,
+    };
+  }
 }

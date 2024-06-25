@@ -36,7 +36,7 @@ export class RoomCrudService {
       throw new InternalServerErrorException(error);
     }
   }
-
+ 
   public async getRooms(id: string) {
     const firends = await this.databaseService.friends.findMany({
       where: {
@@ -44,19 +44,21 @@ export class RoomCrudService {
       },
     });
 
-    const friendsRoom = await Promise.all(
-      [...firends].map(async (friend) => {
-        return await this.databaseService.room.findMany({
-          where: {
-            OR: [{ creatorId: friend.userId }, { creatorId: friend.friendId }],
-          },
-        });
-      }),
-    );
+    const rooms = await this.databaseService.room.findMany({});
+
+    // const friendsRoom = await Promise.all(
+    //   [...firends].map(async (friend) => {
+    //     return await this.databaseService.room.findMany({
+    //       where: {
+    //         OR: [{ creatorId: friend.userId }, { creatorId: friend.friendId }],
+    //       },
+    //     });
+    //   }),
+    // );
 
     return {
       message: 'Active rooms',
-      data: uniq(friendsRoom),
+      data: uniq(rooms),
     };
   }
 
