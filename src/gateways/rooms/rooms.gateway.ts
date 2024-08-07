@@ -19,10 +19,10 @@ export class RoomsGateway {
   constructor(private databaseService: DatabaseService) {}
 
   @SubscribeMessage(SOCKET_EVENTS.PLAY_PAUSE.event)
-  async handlePlayPause(@MessageBody() body: Partial<Room>) {
+  async handlePlayPause(@MessageBody() body: { roomid: string }) {
     const room = await this.databaseService.room.findUnique({
       where: {
-        id: body.id,
+        id: body.roomid,
       },
     });
 
@@ -49,7 +49,7 @@ export class RoomsGateway {
     };
   }
 
-  @SubscribeMessage(SOCKET_EVENTS.PLAY_PAUSE.event)
+  @SubscribeMessage(SOCKET_EVENTS.UPDATE_PLAYBACK.event)
   async handlePlayback(@MessageBody() body: { id: string; playback: number }) {
     const room = await this.databaseService.room.findUnique({
       where: {
