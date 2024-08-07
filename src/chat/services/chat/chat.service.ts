@@ -3,6 +3,7 @@ import { DatabaseService } from '@app/database';
 import { MessageDto } from '../../dto/messageDto';
 import { RoomsGateway } from '../../../gateways/rooms/rooms.gateway';
 import cloudinary from '../../../services/cloudinary';
+import { SOCKET_EVENTS } from 'src/lib/socket.events';
 
 @Injectable()
 export class ChatService {
@@ -26,9 +27,10 @@ export class ChatService {
         },
       });
       this.chatGateway.server.emit(
-        `chat.message-${payload.roomId}`,
-        newMessage,
+        SOCKET_EVENTS.NEW_MESSAGE_FE(newMessage.roomId).event,
+        { roomId: newMessage.roomId, message: newMessage },
       );
+
       return {
         message: 'message sent',
         data: newMessage,
@@ -51,10 +53,9 @@ export class ChatService {
           seenByAll: [],
         },
       });
-
       this.chatGateway.server.emit(
-        `chat.message-${payload.roomId}`,
-        newMessage,
+        SOCKET_EVENTS.NEW_MESSAGE_FE(newMessage.roomId).event,
+        { roomId: newMessage.roomId, message: newMessage },
       );
       return {
         message: 'message sent',

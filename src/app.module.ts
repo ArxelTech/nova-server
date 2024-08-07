@@ -15,9 +15,7 @@ import { MediaModule } from './media/media.module';
 import { RoomsGateway } from './gateways/rooms/rooms.gateway';
 import { ChatModule } from './chat/chat.module';
 import { FriendsModule } from './friends/friends.module';
-
-
-
+import { DatabaseModule } from '@app/database';
 
 @Module({
   imports: [
@@ -53,6 +51,7 @@ import { FriendsModule } from './friends/friends.module';
         },
       }),
     }),
+    DatabaseModule,
     ConfigModule.forRoot(),
     AuthenticationModule,
     UserModule,
