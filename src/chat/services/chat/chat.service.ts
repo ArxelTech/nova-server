@@ -13,8 +13,11 @@ export class ChatService {
     private chatGateway: RoomsGateway,
   ) {}
 
-  async sendMessage(files: Array<Express.Multer.File>, payload: MessageDto) {
-    if (files.length < 1) {
+  async sendMessage(
+    files: Array<Express.Multer.File> = [],
+    payload: MessageDto,
+  ) {
+    if (files?.length < 1) {
       const newMessage = await this.databaseService.message.create({
         data: {
           roomId: payload.roomId,
