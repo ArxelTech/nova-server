@@ -104,7 +104,7 @@ export class RoomCrudService {
     const data = await this.databaseService.message.findMany({
       where: { roomId: id },
       orderBy: {
-        createdAt: 'asc',
+        createdAt: 'desc',
       },
     });
 
