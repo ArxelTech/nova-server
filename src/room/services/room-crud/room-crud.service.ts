@@ -36,7 +36,7 @@ export class RoomCrudService {
       throw new InternalServerErrorException(error);
     }
   }
- 
+
   public async getRooms(id: string) {
     const firends = await this.databaseService.friends.findMany({
       where: {
@@ -103,6 +103,9 @@ export class RoomCrudService {
   public async getRoomMessages(id: string) {
     const data = await this.databaseService.message.findMany({
       where: { roomId: id },
+      orderBy: {
+        createdAt: 'asc',
+      },
     });
 
     return {
