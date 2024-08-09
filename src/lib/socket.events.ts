@@ -21,7 +21,7 @@ export const SOCKET_EVENTS = {
   }),
 
   UPDATE_PLAYBACK_FE: (roomid: string) => ({
-    event: `PLAY_PAUSE:${roomid}`,
+    event: `UPDATE_PLAYBACK:${roomid}`,
     payload: { room: 'room' },
   }),
 
