@@ -39,10 +39,15 @@ export class RoomsGateway {
       },
     });
 
-    this.server.emit(SOCKET_EVENTS.UPDATE_PLAYBACK_FE(room.id).event, {
+    this.server.emit(SOCKET_EVENTS.PLAY_PAUSE_FE(room.id).event, {
       room: updated,
     });
 
+    console.log({
+      message: SOCKET_EVENTS.UPDATE_PLAYBACK_FE + 'Event sent',
+    });
+    console.log('--------UPDATED ROOM PLAY PAUSE DETAILS----------');
+    console.log(updated);
     return {
       message: updated.isPlaying ? 'Is now playing' : 'Is Paused',
       data: updated,
@@ -73,6 +78,11 @@ export class RoomsGateway {
     this.server.emit(SOCKET_EVENTS.UPDATE_PLAYBACK_FE(room.id).event, {
       room: updated,
     });
+    console.log({
+      message: SOCKET_EVENTS.UPDATE_PLAYBACK_FE + 'Event sent',
+    });
+    console.log('--------UPDATED ROOM PLAY BACK DETAILS----------');
+    console.log(updated);
   }
 
   @SubscribeMessage('connected')
