@@ -75,6 +75,7 @@ export class RoomsGateway {
       },
     });
 
+    console.log(room.id === room.id);
     this.server.emit(SOCKET_EVENTS.UPDATE_PLAYBACK_FE(room.id).event, {
       room: updated,
     });
