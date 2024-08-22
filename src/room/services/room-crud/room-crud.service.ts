@@ -106,6 +106,9 @@ export class RoomCrudService {
       orderBy: {
         createdAt: 'desc',
       },
+      include: {
+        creator: true,
+      },
     });
 
     return {
